@@ -1,13 +1,13 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Estacion 1
+      Estacion 26
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <ion-item-group>
+  <!--<ion-item-group>
     <ion-item-divider color="light">Horario: 07:00am - 07:20am</ion-item-divider>
     <ion-item>Espera actual: En espera</ion-item>
     <ion-item>Espera promedio: 2 minutos</ion-item>
@@ -26,6 +26,56 @@
       <p> ¿Cuantas personas hay luego de ti? <ion-input type="text" value=""></ion-input> </p>
       <p> ¿Cuantas personas están atendiendo? <ion-input type="text" value=""></ion-input> </p>
       <button ion-button small>Enviar</button>
+    </ion-card-content>
+  </ion-card>-->
+
+  <ion-card>
+    <img src="assets/imgs/anonymous.jpg"/>
+    <ion-card-content>
+      <ion-card-title>
+        Espera actual: <i>5 minutos</i>
+      </ion-card-title>
+      <ion-list>
+        <ion-item>
+          Hora <p float-right>7:00 am - 7:20 am</p>
+        </ion-item>
+        <ion-item>
+          Espera promedio: <p float-right>7 minutos</p>
+        </ion-item>
+        <ion-item>
+          Fila: <p float-right>5 personas</p>
+        </ion-item>
+        <ion-item>
+          Ciclas: <p float-right>10 ciclas</p>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-content>
+      <ion-card-title>
+        Ayúdanos
+      </ion-card-title>
+      <ion-list>
+        <ion-item>
+          Estoy en fila:
+          <button ion-button item-end icon-left>
+            <ion-icon name="stopwatch"></ion-icon>
+            Contar
+          </button>
+        </ion-item>
+        <ion-item>
+          <label>Fila:</label>
+          <input type="number" min="0" max="50" float-right/>
+        </ion-item>
+        <ion-item>
+          <label>Atendiendo:</label>
+          <input type="number" min="0" max="50" float-right/>
+        </ion-item>
+
+      </ion-list>
+      <button ion-button full>Enviar</button>
     </ion-card-content>
   </ion-card>
 
