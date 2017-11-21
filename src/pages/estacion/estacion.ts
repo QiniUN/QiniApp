@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
+import { Http, Headers } from '@angular/http';
+
 @Component({
   selector: 'page-estacion',
   templateUrl: 'estacion.html'
@@ -20,7 +22,7 @@ export class Estacion {
   stopwatchEnd: number;
   counting: boolean;
 
-  constructor(public navCtrl: NavController ){
+  constructor(public navCtrl: NavController, private http: Http ){
     this.counting = false;
     let d = new Date();
     let hora = d.getHours()
@@ -43,6 +45,18 @@ export class Estacion {
     else if( minuto <= 59 ) {
       franja = hora+":40 "+periodo+" - "+hora+":59"+periodo;
     }
+
+    /*var headers = new Headers();
+     headers.append('Content-Type', 'application/x-www-form-urlencoded');
+     this.http.post( 'http://192.168.111.1/index.lua', body, { headers: headers } )
+     .subscribe(
+        data => {
+         console.log(data['_body']);
+       },
+        error => {
+         console.log(error);
+        }
+      );*/
 
     let data = { esperaActual: 5.0, esperaPromedio: 7.0, fila: 5, ciclas: 10 };
     this.esperaActual = data.esperaActual;
