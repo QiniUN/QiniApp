@@ -9,7 +9,7 @@ import { Estacion } from '../pages/estacion/estacion';
 @Component({
   templateUrl: 'app.html'
 })
-export class MyApp {
+export class Qini {
   rootPage:any = HomePage;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {

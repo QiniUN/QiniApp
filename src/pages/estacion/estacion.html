@@ -33,20 +33,20 @@
     <img src="assets/imgs/anonymous.jpg"/>
     <ion-card-content>
       <ion-card-title>
-        Espera actual: <i>5 minutos</i>
+        Espera actual: <i>{{esperaActual}} minutos</i>
       </ion-card-title>
       <ion-list>
         <ion-item>
-          Hora <p float-right>7:00 am - 7:20 am</p>
+          Hora <p float-right>{{franja}}</p>
         </ion-item>
         <ion-item>
-          Espera promedio: <p float-right>7 minutos</p>
+          Espera promedio: <p float-right>{{esperaPromedio}} minutos</p>
         </ion-item>
         <ion-item>
-          Fila: <p float-right>5 personas</p>
+          Fila: <p float-right>{{fila}} personas</p>
         </ion-item>
         <ion-item>
-          Ciclas: <p float-right>10 ciclas</p>
+          Ciclas: <p float-right>{{ciclas}} ciclas</p>
         </ion-item>
       </ion-list>
     </ion-card-content>
@@ -58,24 +58,37 @@
         Ayúdanos
       </ion-card-title>
       <ion-list>
-        <ion-item>
-          Estoy en fila:
-          <button ion-button item-end icon-left>
-            <ion-icon name="stopwatch"></ion-icon>
-            Contar
-          </button>
-        </ion-item>
+        <ng-container *ngIf="count == undefined">
+          <ion-item [hidden]="counting">
+            Estoy en fila:
+            <button  ion-button item-end icon-left (click)="startStopwatch($event)">
+              <ion-icon name="stopwatch"></ion-icon>
+              Contar
+            </button>
+          </ion-item>
+          <ion-item [hidden]="!counting">
+            Terminé:
+            <button ion-button item-end icon-left (click)="stopStopwatch($event)" color="danger">
+              <ion-icon name="stopwatch"></ion-icon>
+              Detener
+            </button>
+          </ion-item>
+        </ng-container>
+        <ng-container *ngIf="count != undefined">
+          <ion-item>{{count}} minutos</ion-item>
+        </ng-container>
         <ion-item>
           <label>Fila:</label>
-          <input type="number" min="0" max="50" float-right/>
+          <input type="number" min="0" max="50" float-right [(ngModel)]="queue" />
         </ion-item>
         <ion-item>
           <label>Atendiendo:</label>
-          <input type="number" min="0" max="50" float-right/>
+          <input type="number" min="0" max="50" float-right [(ngModel)]="server"/>
         </ion-item>
 
       </ion-list>
-      <button ion-button full>Enviar</button>
+      <button [hidden]="count == undefined || queue == undefined || server == undefined" ion-button full (click)="sendForm($event)" color="secondary">Enviar</button>
+      <button [hidden]="count != undefined && queue != undefined && server != undefined" ion-button full color="light">Enviar</button>
     </ion-card-content>
   </ion-card>
 
