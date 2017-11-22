@@ -42,8 +42,6 @@ export class HomePage {
       map: this.map
     });
 
-
-
     var Est53 = new google.maps.Marker({
       position: {lat: 4.642994, lng: -74.083652 },
       map: this.map
@@ -67,6 +65,22 @@ export class HomePage {
     let thisObj = this;
 
     Est26.addListener( 'click', function(){
+      thisObj.navCtrl.push( Estacion );
+    });
+
+    EstCYT.addListener( 'click', function(){
+      thisObj.navCtrl.push( Estacion );
+    });
+
+    EstUriel.addListener( 'click', function(){
+      thisObj.navCtrl.push( Estacion );
+    });
+
+    Est53.addListener( 'click', function(){
+      thisObj.navCtrl.push( Estacion );
+    });
+
+    Est30.addListener( 'click', function(){
       thisObj.navCtrl.push( Estacion );
     });
   }

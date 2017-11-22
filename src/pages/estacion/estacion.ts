@@ -27,6 +27,8 @@ export class Estacion {
   counting2: boolean;
   counting3: boolean;
 
+  name: String;
+
   constructor(public navCtrl: NavController, private http: Http ){
     this.getData();
   }
@@ -74,6 +76,8 @@ export class Estacion {
        if( data.fila == null ) this.fila = data.fila;
        else this.fila = Math.round( data.fila * 10)/10 ;
        this.ciclas = data.ciclas;
+       this.name = data.name;
+
      },
       error => {
        console.log(error);
