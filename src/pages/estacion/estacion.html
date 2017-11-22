@@ -42,21 +42,21 @@
       </ion-card-title>
       <ion-list>
         <ng-container *ngIf="count == undefined">
-          <ion-item [hidden]="counting1">
+          <ion-item id="counting1">
             Estoy en fila:
             <button  ion-button item-end icon-left (click)="startStopwatchQueue($event)">
               <ion-icon name="stopwatch"></ion-icon>
               Contar fila
             </button>
           </ion-item>
-          <ion-item [hidden]="counting2">
+          <ion-item id="counting2" style="display: none;">
             Terminé la fila:
             <button ion-button item-end icon-left (click)="stopStopwatchQueue($event)" color="danger">
               <ion-icon name="stopwatch"></ion-icon>
               Contar servicio
             </button>
           </ion-item>
-          <ion-item [hidden]="counting3">
+          <ion-item id="counting3" style="display: none;">
             Me atendieron:
             <button ion-button item-end icon-left (click)="stopStopwatchServer($event)" color="danger">
               <ion-icon name="stopwatch"></ion-icon>

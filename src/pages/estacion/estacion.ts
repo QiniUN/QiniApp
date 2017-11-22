@@ -107,8 +107,8 @@ export class Estacion {
   startStopwatchQueue($event): void {
     this.counting1 = true;
     this.counting2 = false;
-    /*console.log(this.counting1);
-    console.log(this.counting2);*/
+    document.getElementById('counting1').style.display = "none";
+    document.getElementById('counting2').style.display = "block";
     var d = new Date();
     this.stopwatchStart = d.getTime();
   }
@@ -116,6 +116,8 @@ export class Estacion {
   stopStopwatchQueue( $event ): void {
     this.counting2 = true;
     this.counting3 = false;
+    document.getElementById('counting2').style.display = "none";
+    document.getElementById('counting3').style.display = "block";
     var d = new Date();
     this.stopwatchEnd = d.getTime();
     this.countQueue = Math.round( ((this.stopwatchEnd - this.stopwatchStart)/1000)/60 * 100)/100;
@@ -129,6 +131,7 @@ export class Estacion {
 
   stopStopwatchServer( $event ): void {
     this.counting3 = true;
+    document.getElementById('counting3').style.display = "none";
     var d = new Date();
     this.stopwatchEnd = d.getTime();
     this.countServer = Math.round( ((this.stopwatchEnd - this.stopwatchStart)/1000)/60 * 100)/100;
