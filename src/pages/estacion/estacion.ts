@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
-import { Http, Headers } from '@angular/http';
+import { Http, Headers, Response } from '@angular/http';
+import 'rxjs/add/operator/map';
 
 @Component({
   selector: 'page-estacion',
+
   templateUrl: 'estacion.html'
 })
 export class Estacion {
@@ -23,6 +25,10 @@ export class Estacion {
   counting: boolean;
 
   constructor(public navCtrl: NavController, private http: Http ){
+    this.getData();
+  }
+
+  getData(): void{
     this.counting = false;
     let d = new Date();
     let hora = d.getHours()
@@ -40,36 +46,52 @@ export class Estacion {
       franja = hora+":00 "+periodo+" - "+hora+":19 "+periodo;
     }
     else if( minuto < 40 ){
-      franja = hora+":20 "+periodo+" - "+hora+":39"+periodo;
+      franja = hora+":20 "+periodo+" - "+hora+":39 "+periodo;
     }
     else if( minuto <= 59 ) {
-      franja = hora+":40 "+periodo+" - "+hora+":59"+periodo;
+      franja = hora+":40 "+periodo+" - "+hora+":59 "+periodo;
     }
 
-    /*var headers = new Headers();
-     headers.append('Content-Type', 'application/x-www-form-urlencoded');
-     this.http.post( 'http://192.168.111.1/index.lua', body, { headers: headers } )
-     .subscribe(
-        data => {
-         console.log(data['_body']);
-       },
-        error => {
-         console.log(error);
-        }
-      );*/
+    franja = "7:00 am - 7:19 am";
 
-    let data = { esperaActual: 5.0, esperaPromedio: 7.0, fila: 5, ciclas: 10 };
-    this.esperaActual = data.esperaActual;
-    this.esperaPromedio = data.esperaPromedio;
-    this.franja = franja;
-    this.fila = data.fila;
-    this.ciclas = data.ciclas;
+    let body = "/1/"+franja+"";
+    var headers = new Headers();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+
+    this.http.get( 'http://localhost:3000/station/getStation'+body, { headers: headers } )
+    .map( res => res.json() )
+    .subscribe(
+      (data) => {
+       if( data.esperaActual == null ) this.esperaActual = data.esperaActual;
+       else this.esperaActual = Math.round( data.esperaActual * 10)/10;
+       this.esperaPromedio = data.esperaPromedio;
+       this.franja = franja;
+       if( data.fila == null ) this.fila = data.fila;
+       else this.fila = Math.round( data.fila * 10)/10 ;
+       this.ciclas = data.ciclas;
+     },
+      error => {
+       console.log(error);
+      }
+    );
   }
 
   sendForm( $event ): void {
-    alert( this.queue );
-    alert( this.server );
-    alert( this.count );
+
+    let body = { id: 1, tiempo: this.count, fila: this.queue, servidores: this.server, franja: this.franja };
+    var headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+
+    this.http.post( 'http://localhost:3000/station/postStation', JSON.stringify(body), { headers: headers } )
+    .map( res => res.json() )
+    .subscribe(
+      (data) => {
+       if(data.guardar) this.getData;
+     },
+      error => {
+       console.log(error);
+      }
+    );
   }
 
   startStopwatch($event): void {

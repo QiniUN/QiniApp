@@ -7,33 +7,14 @@
 </ion-header>
 
 <ion-content padding>
-  <!--<ion-item-group>
-    <ion-item-divider color="light">Horario: 07:00am - 07:20am</ion-item-divider>
-    <ion-item>Espera actual: En espera</ion-item>
-    <ion-item>Espera promedio: 2 minutos</ion-item>
-    <ion-item>Fila: 10 personas</ion-item>
-    <ion-item>No hay bicicletas</ion-item>
-  </ion-item-group>
-
-
-  <ion-card>
-    <ion-card-content>
-      <ion-card-title>
-        <h2> Ayúdanos con información </h2>
-        </ion-card-title>
-
-      <p> Acabo de llegar: <button ion-button small>Contar</button> </p>
-      <p> ¿Cuantas personas hay luego de ti? <ion-input type="text" value=""></ion-input> </p>
-      <p> ¿Cuantas personas están atendiendo? <ion-input type="text" value=""></ion-input> </p>
-      <button ion-button small>Enviar</button>
-    </ion-card-content>
-  </ion-card>-->
-
-  <ion-card>
+    <ion-card>
     <img src="assets/imgs/anonymous.jpg"/>
     <ion-card-content>
-      <ion-card-title>
+      <ion-card-title [hidden]="esperaActual == null">
         Espera actual: <i>{{esperaActual}} minutos</i>
+      </ion-card-title>
+      <ion-card-title [hidden]="esperaActual != null">
+        En espera de datos
       </ion-card-title>
       <ion-list>
         <ion-item>
@@ -43,7 +24,9 @@
           Espera promedio: <p float-right>{{esperaPromedio}} minutos</p>
         </ion-item>
         <ion-item>
-          Fila: <p float-right>{{fila}} personas</p>
+          Fila:
+          <p [hidden]="fila == null" float-right>{{fila}} personas</p>
+          <p [hidden]="fila != null" float-right>Esperando datos</p>
         </ion-item>
         <ion-item>
           Ciclas: <p float-right>{{ciclas}} ciclas</p>
