@@ -29,8 +29,6 @@ export class Estacion {
   counting2: boolean;
   counting3: boolean;
 
-  name: String;
-
   constructor(public navCtrl: NavController, public navParams: NavParams, private http: Http ){
     this.id = navParams.get('id');
     this.getData();
@@ -80,8 +78,6 @@ export class Estacion {
        if( data.fila == null ) this.fila = data.fila;
        else this.fila = Math.round( data.fila * 10)/10 ;
        this.ciclas = data.ciclas;
-       this.name = data.name;
-
      },
       error => {
        console.log(error);
@@ -91,7 +87,7 @@ export class Estacion {
 
   sendForm( $event ): void {
 
-    let body = { id: this.id, tiempoCola: this.countQueue + 16.2, tiempoServicio: this.countServer+3, fila: this.queue, servidores: this.server, franja: this.franja };
+    let body = { id: this.id, tiempoCola: this.countQueue + 2, tiempoServicio: this.countServer+0.8, fila: this.queue, servidores: this.server, franja: this.franja };
 
     var headers = new Headers();
     headers.append('Content-Type', 'application/json');
@@ -111,6 +107,8 @@ export class Estacion {
   startStopwatchQueue($event): void {
     this.counting1 = true;
     this.counting2 = false;
+    /*console.log(this.counting1);
+    console.log(this.counting2);*/
     var d = new Date();
     this.stopwatchStart = d.getTime();
   }
