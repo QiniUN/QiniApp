@@ -42,16 +42,23 @@
       </ion-card-title>
       <ion-list>
         <ng-container *ngIf="count == undefined">
-          <ion-item [hidden]="counting">
+          <ion-item [hidden]="counting1">
             Estoy en fila:
-            <button  ion-button item-end icon-left (click)="startStopwatch($event)">
+            <button  ion-button item-end icon-left (click)="startStopwatchQueue($event)">
               <ion-icon name="stopwatch"></ion-icon>
-              Contar
+              Contar fila
             </button>
           </ion-item>
-          <ion-item [hidden]="!counting">
-            Terminé:
-            <button ion-button item-end icon-left (click)="stopStopwatch($event)" color="danger">
+          <ion-item [hidden]="counting2">
+            Terminé la fila:
+            <button ion-button item-end icon-left (click)="stopStopwatchQueue($event)" color="danger">
+              <ion-icon name="stopwatch"></ion-icon>
+              Contar servicio
+            </button>
+          </ion-item>
+          <ion-item [hidden]="counting3">
+            Me atendieron:
+            <button ion-button item-end icon-left (click)="stopStopwatchServer($event)" color="danger">
               <ion-icon name="stopwatch"></ion-icon>
               Detener
             </button>
@@ -70,8 +77,8 @@
         </ion-item>
 
       </ion-list>
-      <button [hidden]="count == undefined || queue == undefined || server == undefined" ion-button full (click)="sendForm($event)" color="secondary">Enviar</button>
-      <button [hidden]="count != undefined && queue != undefined && server != undefined" ion-button full color="light">Enviar</button>
+      <button [hidden]="countQueue == undefined || countServer == undefined || queue == undefined || server == undefined" ion-button full (click)="sendForm($event)" color="secondary">Enviar</button>
+      <button [hidden]="countQueue != undefined && countServer != undefined && queue != undefined && server != undefined" ion-button full color="light">Enviar</button>
     </ion-card-content>
   </ion-card>
 

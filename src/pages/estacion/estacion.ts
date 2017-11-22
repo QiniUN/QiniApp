@@ -16,20 +16,25 @@ export class Estacion {
   fila: number;
   ciclas: number;
 
-  count: number;
+  countQueue: number;
+  countServer: number;
   queue: number;
   server: number;
 
   stopwatchStart: number;
   stopwatchEnd: number;
-  counting: boolean;
+  counting1: boolean;
+  counting2: boolean;
+  counting3: boolean;
 
   constructor(public navCtrl: NavController, private http: Http ){
     this.getData();
   }
 
   getData(): void{
-    this.counting = false;
+    this.counting1 = false;
+    this.counting2 = true;
+    this.counting3 = true;
     let d = new Date();
     let hora = d.getHours()
     let minuto = d.getMinutes();
@@ -78,7 +83,8 @@ export class Estacion {
 
   sendForm( $event ): void {
 
-    let body = { id: 1, tiempo: this.count, fila: this.queue, servidores: this.server, franja: this.franja };
+    let body = { id: 1, tiempoCola: this.countQueue + 16.2, tiempoServicio: this.countServer+3, fila: this.queue, servidores: this.server, franja: this.franja };
+
     var headers = new Headers();
     headers.append('Content-Type', 'application/json');
 
@@ -94,16 +100,31 @@ export class Estacion {
     );
   }
 
-  startStopwatch($event): void {
-    this.counting = true;
+  startStopwatchQueue($event): void {
+    this.counting1 = true;
+    this.counting2 = false;
     var d = new Date();
     this.stopwatchStart = d.getTime();
   }
 
-  stopStopwatch( $event ): void {
-    this.counting = false;
+  stopStopwatchQueue( $event ): void {
+    this.counting2 = true;
+    this.counting3 = false;
     var d = new Date();
     this.stopwatchEnd = d.getTime();
-    this.count = Math.round( ((this.stopwatchEnd - this.stopwatchStart)/1000)/60 * 100)/100;
+    this.countQueue = Math.round( ((this.stopwatchEnd - this.stopwatchStart)/1000)/60 * 100)/100;
+    this.startStopwatchServer();
+  }
+
+  startStopwatchServer(): void {
+    var d = new Date();
+    this.stopwatchStart = d.getTime();
+  }
+
+  stopStopwatchServer( $event ): void {
+    this.counting3 = true;
+    var d = new Date();
+    this.stopwatchEnd = d.getTime();
+    this.countServer = Math.round( ((this.stopwatchEnd - this.stopwatchStart)/1000)/60 * 100)/100;
   }
 }
