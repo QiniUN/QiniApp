@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 
 import { Http, Headers, Response } from '@angular/http';
 import 'rxjs/add/operator/map';
@@ -10,6 +10,8 @@ import 'rxjs/add/operator/map';
   templateUrl: 'estacion.html'
 })
 export class Estacion {
+  id: number;
+  nombreEstacion:string;
   esperaActual: number;
   esperaPromedio:number;
   franja: string;
@@ -29,7 +31,8 @@ export class Estacion {
 
   name: String;
 
-  constructor(public navCtrl: NavController, private http: Http ){
+  constructor(public navCtrl: NavController, public navParams: NavParams, private http: Http ){
+    this.id = navParams.get('id');
     this.getData();
   }
 
@@ -61,7 +64,7 @@ export class Estacion {
 
     franja = "7:00 am - 7:19 am";
 
-    let body = "/1/"+franja+"";
+    let body = "/"+this.id+"/"+franja+"";
     var headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
 
@@ -69,6 +72,7 @@ export class Estacion {
     .map( res => res.json() )
     .subscribe(
       (data) => {
+      this.nombreEstacion = data.nombreEstacion;
        if( data.esperaActual == null ) this.esperaActual = data.esperaActual;
        else this.esperaActual = Math.round( data.esperaActual * 10)/10;
        this.esperaPromedio = data.esperaPromedio;
@@ -87,7 +91,7 @@ export class Estacion {
 
   sendForm( $event ): void {
 
-    let body = { id: 1, tiempoCola: this.countQueue + 16.2, tiempoServicio: this.countServer+3, fila: this.queue, servidores: this.server, franja: this.franja };
+    let body = { id: this.id, tiempoCola: this.countQueue + 16.2, tiempoServicio: this.countServer+3, fila: this.queue, servidores: this.server, franja: this.franja };
 
     var headers = new Headers();
     headers.append('Content-Type', 'application/json');

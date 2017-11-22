@@ -65,24 +65,28 @@ export class HomePage {
     let thisObj = this;
 
     Est26.addListener( 'click', function(){
-      thisObj.navCtrl.push( Estacion );
-    });
-
-    EstCYT.addListener( 'click', function(){
-      thisObj.navCtrl.push( Estacion );
-    });
-
-    EstUriel.addListener( 'click', function(){
-      thisObj.navCtrl.push( Estacion );
-    });
-
-    Est53.addListener( 'click', function(){
-      thisObj.navCtrl.push( Estacion );
+      thisObj.navCtrl.push( Estacion, { id : 1 } );
     });
 
     Est30.addListener( 'click', function(){
-      thisObj.navCtrl.push( Estacion );
+      thisObj.navCtrl.push( Estacion, { id : 2 } );
     });
+
+    Est53.addListener( 'click', function(){
+      thisObj.navCtrl.push( Estacion, { id : 3 } );
+    });
+
+    EstCYT.addListener( 'click', function(){
+      thisObj.navCtrl.push( Estacion, { id : 4 } );
+    });
+
+    EstUriel.addListener( 'click', function(){
+      thisObj.navCtrl.push( Estacion, { id : 5 } );
+    });
+
+
+
+
   }
 
 
