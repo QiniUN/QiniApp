@@ -89,7 +89,7 @@ export class Estacion {
 
   sendForm( $event ): void {
 
-    let body = { id: this.id, tiempoCola: this.countQueue + 2, tiempoServicio: this.countServer+0.8, fila: this.queue, servidores: this.server, franja: this.franja };
+    let body = { id: this.id, tiempoCola: this.countQueue, tiempoServicio: this.countServer, fila: this.queue, servidores: this.server, franja: this.franja };
 
     var headers = new Headers();
     headers.append('Content-Type', 'application/json');
@@ -126,7 +126,7 @@ export class Estacion {
     document.getElementById('counting3').style.display = "block";
     var d = new Date();
     this.stopwatchEnd = d.getTime();
-    this.countQueue = Math.round( ((this.stopwatchEnd - this.stopwatchStart)/1000)/60 * 100)/100;
+    this.countQueue = 3;//Math.round( ((this.stopwatchEnd - this.stopwatchStart)/1000)/60 * 100)/100;
     document.getElementById("queueTime").style.display = "block";
     document.getElementById("queueTimeP").innerHTML = this.countQueue + " minutos";
     this.startStopwatchServer();
@@ -142,7 +142,7 @@ export class Estacion {
     document.getElementById('counting3').style.display = "none";
     var d = new Date();
     this.stopwatchEnd = d.getTime();
-    this.countServer = Math.round( ((this.stopwatchEnd - this.stopwatchStart)/1000)/60 * 100)/100;
+    this.countServer = 0.8;// Math.round( ((this.stopwatchEnd - this.stopwatchStart)/1000)/60 * 100)/100;
     document.getElementById("serverTime").style.display = "block";
     document.getElementById("serverTimeP").innerHTML = this.countServer + " minutos";
     this.checkForButton( $event );
