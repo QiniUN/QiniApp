@@ -2,4 +2,28 @@ page-estacion {
   ion-card-title i {
     color: green;
   }
+
+  #activeBtn {
+    display: none;
+  }
+
+  #inactiveBtn {
+    display: block;
+  }
+
+  #toSendForm {
+    display: block;
+  }
+
+  #sendedForm {
+    display: none;
+  }
+
+  #queueTime {
+    display: none;
+  }
+
+  #serverTime {
+    display: none;
+  }
 }

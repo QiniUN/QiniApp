@@ -29,6 +29,8 @@ export class Estacion {
   counting2: boolean;
   counting3: boolean;
 
+  guardado: boolean = false;
+
   constructor(public navCtrl: NavController, public navParams: NavParams, private http: Http ){
     this.id = navParams.get('id');
     this.getData();
@@ -92,11 +94,15 @@ export class Estacion {
     var headers = new Headers();
     headers.append('Content-Type', 'application/json');
 
+    var that = this;
     this.http.post( 'http://localhost:3000/station/postStation', JSON.stringify(body), { headers: headers } )
     .map( res => res.json() )
     .subscribe(
       (data) => {
-       if(data.guardar) this.getData;
+        if(data.guarda){
+          document.getElementById("toSendForm").style.display = "none";
+          document.getElementById("sendedForm").style.display = "block";
+        }
      },
       error => {
        console.log(error);
@@ -121,6 +127,8 @@ export class Estacion {
     var d = new Date();
     this.stopwatchEnd = d.getTime();
     this.countQueue = Math.round( ((this.stopwatchEnd - this.stopwatchStart)/1000)/60 * 100)/100;
+    document.getElementById("queueTime").style.display = "block";
+    document.getElementById("queueTimeP").innerHTML = this.countQueue + " minutos";
     this.startStopwatchServer();
   }
 
@@ -135,5 +143,15 @@ export class Estacion {
     var d = new Date();
     this.stopwatchEnd = d.getTime();
     this.countServer = Math.round( ((this.stopwatchEnd - this.stopwatchStart)/1000)/60 * 100)/100;
+    document.getElementById("serverTime").style.display = "block";
+    document.getElementById("serverTimeP").innerHTML = this.countServer + " minutos";
+    this.checkForButton( $event );
+  }
+
+  checkForButton ( $event ): void {
+    if( this.countQueue != undefined && this.countServer != undefined && this.queue != undefined && this.server != undefined ){
+      document.getElementById("activeBtn").style.display = 'block';
+      document.getElementById("inactiveBtn").style.display = 'none';
+    }
   }
 }
