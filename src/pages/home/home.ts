@@ -32,7 +32,6 @@ export class HomePage {
     let mapOptions = {
       scrollwheel: false,
       draggable: false,
-      navigationControl: false,
       mapTypeControl: false,
       scaleControl: false,
       disableDefaultUI: true,
