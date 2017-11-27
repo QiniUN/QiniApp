@@ -30,6 +30,12 @@ export class HomePage {
     let latLng = new google.maps.LatLng(4.636695, -74.083440);
 
     let mapOptions = {
+      scrollwheel: false,
+      draggable: false,
+      navigationControl: false,
+      mapTypeControl: false,
+      scaleControl: false,
+      disableDefaultUI: true,
       center: latLng,
       zoom: 15,
       mapTypeId: google.maps.MapTypeId.ROADMAP

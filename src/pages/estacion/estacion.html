@@ -10,11 +10,8 @@
     <ion-card>
     <img src="assets/imgs/{{id}}.jpg"/>
     <ion-card-content>
-      <ion-card-title [hidden]="esperaActual == null">
-        Espera actual: <i>{{esperaActual}} minutos</i>
-      </ion-card-title>
-      <ion-card-title [hidden]="esperaActual != null">
-        En espera de datos
+      <ion-card-title>
+        Espera actual: <i id="esperaActual">En espera de datos</i>
       </ion-card-title>
       <ion-list>
         <ion-item>
@@ -25,8 +22,7 @@
         </ion-item>
         <ion-item>
           Fila:
-          <p [hidden]="fila == null" float-right>{{fila}} personas</p>
-          <p [hidden]="fila != null" float-right>Esperando datos</p>
+          <p id="filaActual" float-right>Esperando datos</p>
         </ion-item>
         <ion-item>
           Ciclas: <p float-right>{{ciclas}} ciclas</p>

@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
 import { Http, Headers, Response } from '@angular/http';
+import { Observable } from 'rxjs/Rx'
+
+import 'rxjs/add/operator/timeout';
 import 'rxjs/add/operator/map';
 
 @Component({
@@ -30,10 +33,17 @@ export class Estacion {
   counting3: boolean;
 
   guardado: boolean = false;
+  subscription: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private http: Http ){
     this.id = navParams.get('id');
     this.getData();
+    var that = this;
+    this.subscription = Observable.interval(5000).subscribe(
+      x => {
+        that.getData();
+      }
+    );
   }
 
   getData(): void{
@@ -72,13 +82,14 @@ export class Estacion {
     .map( res => res.json() )
     .subscribe(
       (data) => {
-      this.nombreEstacion = data.nombreEstacion;
-       if( data.esperaActual == null ) this.esperaActual = data.esperaActual;
-       else this.esperaActual = Math.round( data.esperaActual * 10)/10;
+       this.nombreEstacion = data.nombreEstacion;
+       if( data.esperaActual == null ) document.getElementById("esperaActual").innerHTML = "En espera de datos";
+       else document.getElementById("esperaActual").innerHTML = Math.round( data.esperaActual * 10)/10 + " minutos";
+
        this.esperaPromedio = data.esperaPromedio;
        this.franja = franja;
-       if( data.fila == null ) this.fila = data.fila;
-       else this.fila = Math.round( data.fila * 10)/10 ;
+       if( data.fila == null ) document.getElementById("filaActual").innerHTML = "Esperando datos";
+       else document.getElementById("filaActual").innerHTML = Math.round( data.fila * 10)/10 + " personas";
        this.ciclas = data.ciclas;
      },
       error => {
@@ -102,6 +113,7 @@ export class Estacion {
         if(data.guarda){
           document.getElementById("toSendForm").style.display = "none";
           document.getElementById("sendedForm").style.display = "block";
+          that.getData();
         }
      },
       error => {
@@ -153,5 +165,10 @@ export class Estacion {
       document.getElementById("activeBtn").style.display = 'block';
       document.getElementById("inactiveBtn").style.display = 'none';
     }
+  }
+
+  ionViewWillLeave() {
+    console.log("Looks like I'm about to leave :(");
+    this.subscription.unsubscribe();
   }
 }
